@@ -37,6 +37,35 @@ This snippet is based on the [counter example from the previous page](/docs/hook
 
 Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects. Whether or not you're used to calling these operations "side effects" (or just "effects"), you've likely performed them in your components before.
 
+Its prototype looks like this : `useEffect(callback: function, [dependence: any])`
+useEffect allows us to execute a function (callback) when a variable (dependence), is modified. For example, if I want to print 'hello' everytime my variable a is modified, I use : 
+`useEffect(() => console.log('hello'), [a])`
+Using this, I tell react that, everytime a is modified, it will refresh and print 'hello'. It allows us to refresh the view everytime it's necessary.
+
+> Be careful not to modify a dependence in the callback, in order not to make useEffect trigger itself and make an infinite loop !
+
+If you send no dependencies, useEffect will execute the callback when the view loads for the first time. It will be executed only once :
+`useEffect(() => console.log('I just logged in !'), [])`
+
+The useEffect hook must be used inside of your page function. It cannot be set outside : 
+```
+import React, { useState, useEffect } from 'react';
+import { Text } from 'react-native';
+
+// useEffect() cannot be set here
+
+const App = () => {
+  const [a, setA] = useState(0)
+  
+  // useEffect() must be set here
+  useEffect(() => console.log('Hello'), []);
+  
+  return (
+    <Text> My React app ! </Text>
+  )
+}
+```
+
 >Tip
 >
 >If you're familiar with React class lifecycle methods, you can think of `useEffect` Hook as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` combined.

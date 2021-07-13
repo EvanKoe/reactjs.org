@@ -20,7 +20,7 @@ function Example() {
   useEffect(() => {
     // Update the document title using the browser API
     document.title = `You clicked ${count} times`;
-  });
+  }, []);
 
   return (
     <div>
@@ -36,6 +36,26 @@ function Example() {
 This snippet is based on the [counter example from the previous page](/docs/hooks-state.html), but we added a new feature to it: we set the document title to a custom message including the number of clicks.
 
 Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects. Whether or not you're used to calling these operations "side effects" (or just "effects"), you've likely performed them in your components before.
+
+Its prototype looks like this : 
+`useEffect(callback: function, [dependence: any])`
+
+It is used to perform a task (callback) when a variable (dependence) is modified. For example: I want to print 'Hello World !' everytime my variable a is modified : 
+`useEffect(() => console.log('Hello World !'), [a])`
+This way, I can control what to do when a dependence is modified. This will allow us to refresh the page only when it is necessary.
+
+> Note that dependencies have to be sent as an array, even if there is only one of them.
+
+If the dependencies array is empty, the callback will be executed only once : at the first load of the view :
+`useEffect(() => console.log('This useEffect executes only once !'), [])`
+
+> Warning ! Do not set a variable you will modify in the useEffect as a dependence ! It will make an inifnite loop !
+```
+const [a, setA] = useState(0)
+
+useEffect(() => setA(a + 1), [a])
+```
+Because useEffect will trigger everytime a is modified, if you make it modify a, it will trigger itself and loop. This will make your app crash. Be careful !
 
 >Tip
 >

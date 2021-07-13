@@ -37,9 +37,10 @@ This snippet is based on the [counter example from the previous page](/docs/hook
 
 Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects. Whether or not you're used to calling these operations "side effects" (or just "effects"), you've likely performed them in your components before.
 
-Its prototype looks like this : `useEffect(callback: function, [dependence: any])`
+Its prototype looks like this : 
+```useEffect(callback: function, [dependence: any])```
 useEffect allows us to execute a function (callback) when a variable (dependence), is modified. For example, if I want to print 'hello' everytime my variable a is modified, I use : 
-`useEffect(() => console.log('hello'), [a])`
+```useEffect(() => console.log('hello'), [a])```
 Using this, I tell react that, everytime a is modified, it will refresh and print 'hello'. It allows us to refresh the view everytime it's necessary.
 
 > Be careful not to modify a dependence in the callback, in order not to make useEffect trigger itself and make an infinite loop !
